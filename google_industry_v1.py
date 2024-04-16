@@ -12,16 +12,26 @@ banner = input('Нажми для продолжения...')
 
 with open('industry.txt', 'r') as file:
 	industry = file.readlines()
+	numb=0
 	for industr in industry:
+		numb+=1
 		print(f'\n{industr}')
 		driver.get(start_url)
 		enter_search = driver.find_element(By.TAG_NAME, 'textarea')
 		enter_search.send_keys(f'site:linkedin.com/in intext:{industr}')
+		if numb == 1:
+			input('Нажми, когда будешь готов...')
 		try:
 			enter_search.send_keys(Keys.ENTER)
 		except:
 			pass
 		time.sleep(2)
+
+		num=0
+		while num < 5:
+			num+=1
+			time.sleep(1)
+			driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
 
 		links = driver.find_elements(By.TAG_NAME, 'h3')
